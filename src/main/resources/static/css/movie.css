@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+/* 기본 스타일 */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f1f1;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #e60012;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+/* 테이블 스타일 */
+.movie_list {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    table-layout: auto;
+}
+
+.movie_list colgroup col:nth-child(1) { width: 8%; } /* 글번호 */
+.movie_list colgroup col:nth-child(2) { width: 10%; } /* 영화 제목 */
+.movie_list colgroup col:nth-child(3) { width: 10%; } /* 감독 이름 */
+.movie_list colgroup col:nth-child(4) { width: 10%; } /* 개봉일 */
+.movie_list colgroup col:nth-child(5) { width: 10%; } /* 장르 */
+.movie_list colgroup col:nth-child(6) { width: 8%; } /* 평점 (간격 증가) */
+.movie_list colgroup col:nth-child(7) { width: 34%; } /* 영화 설명 */
+.movie_list colgroup col:nth-child(8) { width: 10%; } /* 작성일 */
+
+.movie_list td:nth-child(6) { /* 평점 */
+    padding: 20px;
+}
+
+.movie_list th, .movie_list td {
+    padding: 14px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.movie_list th {
+    background-color: #e60012;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.movie_list tr:nth-child(even) {
+    background-color: #f9e5e5;
+}
+
+.movie_list tr:hover {
+    background-color: #dad2d2;
+    transition: 0.3s;
+}
+
+.title {
+    font-weight: bold;
+    color: #e60012;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    .movie_list th, .movie_list td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
