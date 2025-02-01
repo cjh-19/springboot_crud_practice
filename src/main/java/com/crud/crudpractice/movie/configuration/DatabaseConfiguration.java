@@ -1,4 +1,4 @@
-package com.crud.movie.configuration;
+package com.crud.crudpractice.movie.configuration;
 
 import javax.sql.DataSource;
 
@@ -34,6 +34,7 @@ public class DatabaseConfiguration {
         return dataSource;
     }
 
+    // SqlSessionFactory: SqlSession 객체를 생성하는 역할을 담당하는 인터페이스
     @Bean
     SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
@@ -41,9 +42,15 @@ public class DatabaseConfiguration {
         sessionFactoryBean.setMapperLocations(
                 applicationContext.getResources("classpath:/mapper/**/sql-*.xml")
         );
+
+        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+        configuration.setMapUnderscoreToCamelCase(true);
+        sessionFactoryBean.setConfiguration(configuration);
+
         return sessionFactoryBean.getObject();
     }
 
+    // SqlSessionTemplate: MyBatis와 스프링 프레임워크를 통합할 때 사용하는 클래스
     @Bean
     SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
