@@ -5,6 +5,7 @@ import com.crud.crudpractice.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -25,4 +26,18 @@ public class MovieController {
 
         return mv;
     }
+
+    // 영화 등록 화면 요청을 처리하는 메서드
+    @GetMapping("/movie/openMovieWrite.do")
+    public String openMovieWrite() throws Exception {
+        return "/movie/movieWrite";
+    }
+
+    // 영화 저장 요청을 처리하는 메서드
+    @PostMapping("/movie/insertMovie.do")
+    public String insertBoard(MovieDto movieDto) throws Exception {
+        movieService.insertBoard(movieDto);
+        return "redirect:/movie/openMovieList.do";
+    }
+
 }

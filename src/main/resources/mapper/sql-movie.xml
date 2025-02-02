@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.crud.crudpractice.movie.mapper.MovieMapper">
+    <!-- 영화 목록 조회 쿼리 -->
     <select id="selectMovieList" resultType="com.crud.crudpractice.movie.dto.MovieDto">
         select movie_id, title, director, release_date, genre, rating, description, created_at
         from movies
         order by movie_id desc
     </select>
+
+    <!-- 영화 등록 쿼리 -->
+    <insert id="insertMovie" parameterType="com.crud.crudpractice.movie.dto.MovieDto">
+        insert into movies (title, director, release_date, genre, rating, description)
+        values (#{title}, #{director}, #{releaseDate}, #{genre}, #{rating}, #{description})
+    </insert>
 </mapper>

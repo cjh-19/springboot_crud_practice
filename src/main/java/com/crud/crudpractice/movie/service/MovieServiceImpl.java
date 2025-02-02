@@ -20,4 +20,9 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDto> selectMovieList() {
         return movieMapper.selectMovieList();
     }
+
+    @Override
+    public void insertBoard(MovieDto movieDto) {
+        movieMapper.insertMovie(movieDto);
+    }
 }

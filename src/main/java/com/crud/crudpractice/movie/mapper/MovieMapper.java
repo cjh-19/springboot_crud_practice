@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface MovieMapper {
     List<MovieDto> selectMovieList();
+    void insertMovie(MovieDto movieDto);
 }

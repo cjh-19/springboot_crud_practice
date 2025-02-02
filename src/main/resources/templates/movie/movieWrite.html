@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>영화 정보 관리</title>
+    <link rel="stylesheet" th:href="@{/css/movie.css}" />
+</head>
+<body>
+<div class="container">
+    <h2>영화 등록</h2>
+    <form id="frm" method="post" action="/movie/insertMovie.do">
+        <table class="movie_detail">
+            <tr>
+                <th>영화 제목</th>
+                <td><input type="text" id="title" name="title" placeholder="영화 제목을 입력하세요" required /></td>
+            </tr>
+            <tr>
+                <th>감독</th>
+                <td><input type="text" id="director" name="director" placeholder="감독 이름을 입력하세요" required /></td>
+            </tr>
+            <tr>
+                <th>개봉일</th>
+                <td><input type="date" id="releaseDate" name="releaseDate" /></td>
+            </tr>
+            <tr>
+                <th>장르</th>
+                <td><input type="text" id="genre" name="genre" placeholder="예: 드라마, 액션 등" /></td>
+            </tr>
+            <tr>
+                <th>평점</th>
+                <td>
+                    <input type="number" id="rating" name="rating" placeholder="예: 8.5" step="0.1" min="0" max="10" />
+                </td>
+            </tr>
+            <tr>
+                <th>영화 설명</th>
+                <td><textarea id="description" name="description" placeholder="영화 설명을 입력하세요"></textarea></td>
+            </tr>
+        </table>
+        <input type="submit" id="submit" value="저장" class="btn" />
+    </form>
+</div>
+</body>
+</html>

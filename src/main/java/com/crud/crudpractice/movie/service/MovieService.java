@@ -5,6 +5,6 @@ import com.crud.crudpractice.movie.dto.MovieDto;
 import java.util.List;
 
 public interface MovieService {
-
     List<MovieDto> selectMovieList();
+    void insertBoard(MovieDto movieDto);
 }
