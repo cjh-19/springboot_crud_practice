@@ -93,3 +93,88 @@ h2 {
         font-size: 14px;
     }
 }
+
+
+/* 영화 상세/등록용 테이블 스타일 (.movie_detail) */
+.movie_detail {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.movie_detail th,
+.movie_detail td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* 테이블 헤더 스타일 */
+.movie_detail th {
+    background-color: #f3848c;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* 입력폼 및 텍스트영역 스타일 */
+.movie_detail input[type="text"],
+.movie_detail input[type="date"],
+.movie_detail input[type="number"],
+.movie_detail textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+/* 포커스 시 강조 효과 */
+.movie_detail input[type="text"]:focus,
+.movie_detail input[type="date"]:focus,
+.movie_detail input[type="number"]:focus,
+.movie_detail textarea:focus {
+    border-color: #e60012;
+    outline: none;
+}
+
+/* 텍스트영역은 수직 크기 조절 허용 */
+.movie_detail textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* 버튼 스타일 (공통 .btn 클래스 재정의) */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px 0 5px;
+    background-color: #e60012;
+    color: #fff !important;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #cc0010;
+    transform: translateY(-2px);
+}
+
+/* 반응형 디자인 (영화 상세/등록 테이블) */
+@media screen and (max-width: 768px) {
+    .movie_detail th,
+    .movie_detail td {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+}

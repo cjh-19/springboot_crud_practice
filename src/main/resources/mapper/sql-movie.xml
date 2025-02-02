@@ -13,4 +13,31 @@
         insert into movies (title, director, release_date, genre, rating, description)
         values (#{title}, #{director}, #{releaseDate}, #{genre}, #{rating}, #{description})
     </insert>
+
+    <!-- 영화 상세 조회 쿼리 -->
+    <select id="selectMovieDetail" parameterType="java.lang.Long" resultType="com.crud.crudpractice.movie.dto.MovieDto">
+        select movie_id, title, director, release_date, genre, rating, description, created_at, updated_at
+        from movies
+        where movie_id = #{movieId}
+    </select>
+
+    <!-- 영화 정보 수정 쿼리 -->
+    <update id="updateMovie" parameterType="com.crud.crudpractice.movie.dto.MovieDto">
+        update movies
+        set title = #{title}
+          , director = #{director}
+          , release_date = #{releaseDate}
+          , genre = #{genre}
+          , rating = #{rating}
+          , description = #{description}
+        where movie_id = #{movieId}
+    </update>
+
+    <!-- 영화 삭제 쿼리 -->
+    <delete id="deleteMovie" parameterType="com.crud.crudpractice.movie.dto.MovieDto">
+        delete from movies
+        where movie_id = #{movieId}
+    </delete>
+
+
 </mapper>

@@ -25,4 +25,23 @@ public class MovieServiceImpl implements MovieService {
     public void insertBoard(MovieDto movieDto) {
         movieMapper.insertMovie(movieDto);
     }
+
+    @Override
+    public MovieDto selectMovieDetail(Long movieId) {
+        return movieMapper.selectMovieDetail(movieId);
+    }
+
+    @Override
+    public void updateMovie(MovieDto movieDto) {
+        movieMapper.updateMovie(movieDto);
+    }
+
+    @Override
+    public void deleteMovie(Long movieId) {
+        MovieDto movieDto = new MovieDto();
+        movieDto.setMovieId(movieId);
+        movieMapper.deleteMovie(movieDto);
+    }
+
+
 }

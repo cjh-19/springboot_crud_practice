@@ -9,4 +9,7 @@ import java.util.List;
 public interface MovieMapper {
     List<MovieDto> selectMovieList();
     void insertMovie(MovieDto movieDto);
+    MovieDto selectMovieDetail(Long movieId);
+    void updateMovie(MovieDto movieDto);
+    void deleteMovie(MovieDto movieDto);
 }

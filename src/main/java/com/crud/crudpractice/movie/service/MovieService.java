@@ -7,4 +7,7 @@ import java.util.List;
 public interface MovieService {
     List<MovieDto> selectMovieList();
     void insertBoard(MovieDto movieDto);
+    MovieDto selectMovieDetail(Long movieId);
+    void updateMovie(MovieDto movieDto);
+    void deleteMovie(Long movieId);
 }
