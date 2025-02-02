@@ -29,7 +29,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void insertBoard(MovieDto movieDto, MultipartHttpServletRequest request) {
+    public void insertMovie(MovieDto movieDto, MultipartHttpServletRequest request) {
         movieMapper.insertMovie(movieDto);
 
         try {
@@ -66,5 +66,8 @@ public class MovieServiceImpl implements MovieService {
         movieMapper.deleteMovie(movieDto);
     }
 
-
+    @Override
+    public MoviePosterDto selectMoviePosterInfo(Long posterId, Long movieId) {
+        return movieMapper.selectMoviePosterInfo(posterId, movieId);
+    }
 }

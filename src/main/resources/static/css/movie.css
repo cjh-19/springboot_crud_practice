@@ -178,3 +178,22 @@ h2 {
         font-size: 14px;
     }
 }
+
+/* 다운로드 버튼 스타일 - 크기와 글자 크기를 줄이고, 연한 핑크 배경으로 설정 */
+.download-btn {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: lightpink;  /* 연한 핑크 */
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.download-btn:hover {
+    background-color: #ff9bb0;    /* 살짝 어두운 핑크 */
+    transform: translateY(-1px);
+}

@@ -9,7 +9,8 @@
     </select>
 
     <!-- 영화 등록 쿼리 -->
-    <insert id="insertMovie" parameterType="com.crud.crudpractice.movie.dto.MovieDto">
+    <insert id="insertMovie" parameterType="com.crud.crudpractice.movie.dto.MovieDto"
+            useGeneratedKeys="true" keyProperty="movieId">
         insert into movies (title, director, release_date, genre, rating, description)
         values (#{title}, #{director}, #{releaseDate}, #{genre}, #{rating}, #{description})
     </insert>
@@ -53,5 +54,12 @@
         from movieposters
         where movie_id = #{movieId}
     </select>
+
+    <select id="selectMoviePosterInfo" parameterType="map" resultType="com.crud.crudpractice.movie.dto.MoviePosterDto">
+        select poster_url, created_at
+        from movieposters
+        where poster_id = #{posterId} and movie_id = #{movieId}
+    </select>
+
 
 </mapper>

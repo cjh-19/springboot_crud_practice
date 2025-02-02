@@ -72,17 +72,26 @@
 
   <!-- 첨부파일 목록 -->
   <div class="file_list">
-    <div th:each="file : ${movie.moviePostersList}" style="margin-bottom: 20px;">
+    <div th:each="file : ${movie.moviePostersList}" style="margin: 20px;">
       <!-- 클릭 시 원본 이미지로 이동 -->
       <a th:href="${file.posterUrl}" target="_blank">
-        <!-- 이미지 미리보기 -->
-        <img th:src="${file.posterUrl}" alt="Poster Image" style="max-width: 200px; max-height: 200px; display: block; margin-bottom: 5px;" />
+
+        <!-- 로컬 파일이면 경로 변환 -->
+        <img th:if="${file.posterUrl.startsWith('f:\LG CNS AM Inspire Camp\spring-pjt1\uploads')}"
+             th:src="@{'/uploads' + ${file.posterUrl.substring(#strings.length('f:\LG CNS AM Inspire Camp\spring-pjt1\uploads'))}}"
+             alt="Poster Image" style="max-width: 200px; max-height: 200px;" />
+
+        <!-- 외부 URL이면 그대로 사용 -->
+        <img th:unless="${file.posterUrl.startsWith('f:\LG CNS AM Inspire Camp\spring-pjt1\uploads')}"
+             th:src="${file.posterUrl}"
+             alt="Poster Image" style="max-width: 200px; max-height: 200px;" />
       </a>
-      <!-- URL 출력 -->
-      <span th:text="${file.posterUrl}"></span>
+      <br/>
+      <!-- 다운로드 버튼 -->
+      <a th:href="@{/movie/downloadMoviePoster.do(posterId=${file.posterId}, movieId=${movie.movieId})}" class="download-btn">다운로드</a>
       <br/>
       <!-- 생성일 출력 (포맷 예시) -->
-      <span th:text="${#temporals.format(file.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+      <span th:text="|업로드 날짜: ${#temporals.format(file.createdAt, 'yyyy-MM-dd HH:mm:ss')}|"></span>
     </div>
   </div>
 
