@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>오류 발생</title>
+  <link rel="stylesheet" th:href="@{/css/movie.css}" />
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f8f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      background-color: #e60012;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .error-details {
+      text-align: left;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: white;
+      word-wrap: break-word;  /* 긴 단어 자동 줄바꿈 */
+      overflow-wrap: break-word;
+    }
+
+    .error-message {
+      font-size: 16px;
+      color: #333;
+      background-color: #f8e5e5;
+      padding: 10px;
+      border-radius: 5px;
+      white-space: pre-wrap; /* 줄바꿈 유지 */
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .error-list {
+      list-style: none;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #f4f4f4;
+      border-radius: 5px;
+      font-size: 14px;
+      font-family: monospace;
+      max-height: 200px; /* 최대 높이 지정 */
+      overflow: auto;  /* 스크롤 가능 */
+      white-space: pre-wrap; /* 줄바꿈 유지 */
+      word-break: break-word;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #e60012;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background-color: #cc0010;
+      transform: translateY(-2px);
+    }
+
+    /* 반응형 디자인 */
+    @media screen and (max-width: 768px) {
+      .container {
+        width: 95%;
+      }
+      .error-details {
+        font-size: 14px;
+      }
+      .error-list {
+        max-height: 150px; /* 모바일에서는 더 작은 높이 설정 */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>오류 발생</h1>
+
+  <div class="error-details">
+    <p><strong>요청 URL:</strong> <span th:text="${request.getRequestURI()}"></span></p>
+    <p><strong>오류 메시지:</strong> <span class="error-message" th:text="${message}"></span></p>
+
+    <h2>오류 상세 내용</h2>
+    <button class="btn" onclick="toggleDetails()">오류 상세 보기</button>
+
+    <ul id="error-details-list" class="error-list hidden">
+      <li th:each="line : ${stackTrace}" th:text="${line.toString()}"></li>
+    </ul>
+
+    <a href="/movie/openMovieList.do" class="btn">메인 페이지로 이동</a>
+  </div>
+</div>
+
+<script>
+  function toggleDetails() {
+    const detailsList = document.getElementById("error-details-list");
+    const button = document.querySelector(".btn");
+
+    if (detailsList.classList.contains("hidden")) {
+      detailsList.classList.remove("hidden");
+      button.textContent = "오류 상세 숨기기";
+    } else {
+      detailsList.classList.add("hidden");
+      button.textContent = "오류 상세 보기";
+    }
+  }
+</script>
+
+</body>
+</html>
