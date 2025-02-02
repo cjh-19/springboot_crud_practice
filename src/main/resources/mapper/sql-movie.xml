@@ -40,6 +40,7 @@
         where movie_id = #{movieId}
     </delete>
 
+    <!-- 영화 포스터 등록 쿼리 -->
     <insert id="insertMoviePosterList" parameterType="com.crud.crudpractice.movie.dto.MoviePosterDto">
         insert into movieposters
         (movie_id, poster_url)
@@ -49,17 +50,17 @@
         </foreach>
     </insert>
 
+    <!-- 영화 포스터 리스트 조회 쿼리 -->
     <select id="selectMoviePosterList" parameterType="java.lang.Long" resultType="com.crud.crudpractice.movie.dto.MoviePosterDto">
         select poster_id, movie_id, poster_url, created_at
         from movieposters
         where movie_id = #{movieId}
     </select>
 
+    <!-- 영화 포스터 정보 조회 쿼리 -->
     <select id="selectMoviePosterInfo" parameterType="map" resultType="com.crud.crudpractice.movie.dto.MoviePosterDto">
         select poster_url, created_at
         from movieposters
         where poster_id = #{posterId} and movie_id = #{movieId}
     </select>
-
-
 </mapper>
