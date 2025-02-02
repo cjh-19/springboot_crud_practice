@@ -70,6 +70,22 @@
     </table>
   </form>
 
+  <!-- 첨부파일 목록 -->
+  <div class="file_list">
+    <div th:each="file : ${movie.moviePostersList}" style="margin-bottom: 20px;">
+      <!-- 클릭 시 원본 이미지로 이동 -->
+      <a th:href="${file.posterUrl}" target="_blank">
+        <!-- 이미지 미리보기 -->
+        <img th:src="${file.posterUrl}" alt="Poster Image" style="max-width: 200px; max-height: 200px; display: block; margin-bottom: 5px;" />
+      </a>
+      <!-- URL 출력 -->
+      <span th:text="${file.posterUrl}"></span>
+      <br/>
+      <!-- 생성일 출력 (포맷 예시) -->
+      <span th:text="${#temporals.format(file.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+    </div>
+  </div>
+
   <input type="button" id="list" class="btn" value="목록으로" />
   <input type="button" id="update" class="btn" value="수정하기" />
   <input type="button" id="delete" class="btn" value="삭제하기" />

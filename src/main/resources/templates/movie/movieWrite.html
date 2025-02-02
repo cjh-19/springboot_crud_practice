@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <h2>영화 등록</h2>
-    <form id="frm" method="post" action="/movie/insertMovie.do">
+    <form id="frm" method="post" action="/movie/insertMovie.do" enctype="multipart/form-data">
         <table class="movie_detail">
             <tr>
                 <th>영화 제목</th>
@@ -37,6 +37,7 @@
                 <td><textarea id="description" name="description" placeholder="영화 설명을 입력하세요"></textarea></td>
             </tr>
         </table>
+        <input type="file" id="files" name="files" multiple="multiple" />
         <input type="submit" id="submit" value="저장" class="btn" />
     </form>
 </div>

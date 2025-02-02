@@ -18,5 +18,5 @@ public class MovieDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<MoviePosterDto> moviePosters; // 영화에 해당하는 포스터 리스트
+    private List<MoviePosterDto> moviePostersList; // 영화에 해당하는 포스터 리스트
 }
