@@ -1,17 +1,19 @@
 package jpaRefactoring.movie.controller;
 
-import jpaRefactoring.movie.dto.MovieDto;
-import jpaRefactoring.movie.dto.MoviePosterDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jpaRefactoring.movie.dto.MovieListResponse;
+import jpaRefactoring.movie.entity.MovieEntity;
+import jpaRefactoring.movie.entity.MoviePosterEntity;
 import jpaRefactoring.movie.service.MovieService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -20,74 +22,81 @@ import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 public class MovieController {
 
     @Autowired
     private MovieService movieService;
 
     // 영화 목록 조회 메서드
-    @GetMapping("/movie/openMovieList.do")
-    public ModelAndView openMovieList() throws Exception {
-        ModelAndView mv = new ModelAndView("/movie/movieList");
+    @GetMapping("/movie")
+    public ResponseEntity<Object> openMovieList() throws Exception {
+        List<MovieListResponse> result = new ArrayList<>();
 
-        List<MovieDto> list = movieService.selectMovieList();
-        mv.addObject("list", list);
-
-        return mv;
-    }
-
-    // 영화 등록 화면 요청을 처리하는 메서드
-    @GetMapping("/movie/openMovieWrite.do")
-    public String openMovieWrite() throws Exception {
-        return "/movie/movieWrite";
+        try {
+            List<MovieEntity> movieList = movieService.selectMovieList();
+            movieList.forEach(dto -> result.add(new ModelMapper().map(dto, MovieListResponse.class)));
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("목록 조회 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // 영화 저장 요청을 처리하는 메서드
-    @PostMapping("/movie/insertMovie.do")
-    public String insertMovie(MovieDto movieDto, MultipartHttpServletRequest request) throws Exception {
-        movieService.insertMovie(movieDto, request);
-        return "redirect:/movie/openMovieList.do";
+    @PostMapping(value = "/movie", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> insertMovie(@RequestParam("movie") String movieData, MultipartHttpServletRequest request) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        MovieEntity movieEntity = objectMapper.readValue(movieData, MovieEntity.class);
+        Map<String, String> result = new HashMap<>();
+        try {
+            movieService.insertMovie(movieEntity, request);
+            result.put("message", "영화 등록 성공");
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        } catch (Exception e) {
+            result.put("message", "영화 등록 실패");
+            result.put("description", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+        }
     }
 
     // 영화 상세 조회 요청을 처리하는 메서드
-    @GetMapping("/movie/openMovieDetail.do")
-    public ModelAndView openBoardDetail(@RequestParam("movieId") Long movieId) throws Exception {
-        MovieDto movieDto = movieService.selectMovieDetail(movieId);
+    @GetMapping("/movie/{movieId}")
+    public MovieEntity openBoardDetail(@RequestParam("movieId") Long movieId) throws Exception {
+        MovieEntity movieEntity = movieService.selectMovieDetail(movieId);
 
-        ModelAndView mv = new ModelAndView("/movie/movieDetail");
-        mv.addObject("movie", movieDto);
-        return mv;
+        return movieEntity;
     }
 
     // 수정 요청을 처리할 메서드
-    @PostMapping("/movie/updateMovie.do")
-    public String updateMovie(MovieDto movieDto) throws Exception {
-        movieService.updateMovie(movieDto);
-        return "redirect:/movie/openMovieList.do";
+    @PutMapping("/movie/{movieId}")
+    public void updateMovie(@PathVariable("movieId") Long movieId, @RequestBody MovieEntity movieEntity) throws Exception {
+        movieEntity.setMovieId(movieId);
+        movieService.updateMovie(movieEntity);
     }
 
     // 삭제 요청을 처리할 메서드
-    @PostMapping("/movie/deleteMovie.do")
-    public String deleteMovie(@RequestParam("movieId") Long movieId) throws Exception {
+    @DeleteMapping("/movie/{movieId}")
+    public void deleteMovie(@PathVariable("movieId") Long movieId) throws Exception {
         movieService.deleteMovie(movieId);
-        return "redirect:/movie/openMovieList.do";
     }
 
     // 파일 다운로드 요청을 처리하는 메서드
-    @GetMapping("/movie/downloadMoviePoster.do")
+    @GetMapping("/movie/file")
     public void downloadBoardFile(@RequestParam("posterId") Long posterId,
                                   @RequestParam("movieId") Long movieId,
                                   HttpServletResponse response) throws Exception {
         // posterId와 movieId가 일치하는 파일 정보를 조회
-        MoviePosterDto moviePosterDto = movieService.selectMoviePosterInfo(posterId, movieId);
-        if (ObjectUtils.isEmpty(moviePosterDto)) {
+        MoviePosterEntity moviePosterEntity = movieService.selectMoviePosterInfo(posterId, movieId);
+        if (ObjectUtils.isEmpty(moviePosterEntity)) {
             return;
         }
 
-        String posterUrl = moviePosterDto.getPosterUrl();
+        String posterUrl = moviePosterEntity.getPosterUrl();
         byte[] fileBytes = null;
         String fileName = null;
 

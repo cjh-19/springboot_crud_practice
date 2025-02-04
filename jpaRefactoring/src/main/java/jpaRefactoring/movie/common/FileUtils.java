@@ -1,6 +1,6 @@
 package jpaRefactoring.movie.common;
 
-import com.crud.crudpractice.movie.dto.MoviePosterDto;
+import jpaRefactoring.movie.entity.MoviePosterEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -20,12 +20,12 @@ public class FileUtils {
     private String uploadDir;
 
     // 요청을 통해서 전달받은 파일을 저장하고, 파일 정보를 반환하는 메서드
-    public List<MoviePosterDto> parseFileInfo(Long movieId, MultipartHttpServletRequest request) throws Exception {
+    public List<MoviePosterEntity> parseFileInfo(MultipartHttpServletRequest request) throws Exception {
         if (ObjectUtils.isEmpty(request)) {
             return null;
         }
 
-        List<MoviePosterDto> fileInfoList = new ArrayList<>();
+        List<MoviePosterEntity> fileInfoList = new ArrayList<>();
 
         // 파일을 저장할 디렉터리를 설정
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -66,10 +66,9 @@ public class FileUtils {
                     String storedFilePath = storedDir + "\\" + storedFileName;
 
                     // 파일 정보를 리스트에 저장
-                    MoviePosterDto dto = new MoviePosterDto();
-                    dto.setMovieId(movieId);
-                    dto.setPosterUrl(storedFilePath);
-                    fileInfoList.add(dto);
+                    MoviePosterEntity moviePosterEntity = new MoviePosterEntity();
+                    moviePosterEntity.setPosterUrl(storedFilePath);
+                    fileInfoList.add(moviePosterEntity);
 
                     // 파일 저장
                     fileDir = new File(storedFilePath);

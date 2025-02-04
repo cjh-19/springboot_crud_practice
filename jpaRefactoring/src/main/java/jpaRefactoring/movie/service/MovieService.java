@@ -1,16 +1,16 @@
 package jpaRefactoring.movie.service;
 
-import jpaRefactoring.movie.dto.MovieDto;
-import jpaRefactoring.movie.dto.MoviePosterDto;
+import jpaRefactoring.movie.entity.MovieEntity;
+import jpaRefactoring.movie.entity.MoviePosterEntity;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
 public interface MovieService {
-    List<MovieDto> selectMovieList();
-    void insertMovie(MovieDto movieDto, MultipartHttpServletRequest request);
-    MovieDto selectMovieDetail(Long movieId);
-    void updateMovie(MovieDto movieDto);
+    List<MovieEntity> selectMovieList();
+    void insertMovie(MovieEntity movieEntity, MultipartHttpServletRequest request) throws Exception;
+    MovieEntity selectMovieDetail(Long movieId);
+    void updateMovie(MovieEntity movieEntity);
     void deleteMovie(Long movieId);
-    MoviePosterDto selectMoviePosterInfo(Long posterId, Long movieId);
+    MoviePosterEntity selectMoviePosterInfo(Long posterId, Long movieId);
 }
